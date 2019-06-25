@@ -1,1 +1,2 @@
-# 2019_Cpp_Study_LinearAlgebraLibrary
+# 2019 C++ Study 
+## Linear Algebra Library
