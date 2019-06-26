@@ -1,6 +1,11 @@
 #include <iostream>
 using namespace std;
 
+class Matrix3d
+{
+
+};
+
 class Vector3d
 {
 public:
@@ -122,11 +127,33 @@ int main()
 	// cross product
 	Vector3d v4 = v1.crossProduct(v2);
 
-	cout << Vector3d::dim << endl;
+	// scalar addition
+	Vector3d v5 = v1.add(3.0);
 
-	cout << v1.x() << endl;
+	// scalar subtraction
+	Vector3d v5 = v1.subtract(3.0);
 
-	v1.x() = 5.0;
+	// scalar multiplication
+	Vector3d v5 = v1.multiply(3.0);
+
+	// matrix
+	Matrix3d m1(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
+	Matrix3d m2(-1.0, -2.0, -3.0, -4.0, -5.0, -6.0, 7.0, 8.0, 9.0);
+
+	// matrix addition
+	Matix3d m3 = m1.add(m2);
+
+	// matrix subtraction
+	Matix3d m4 = m1.subtract(m2);
+
+	// matrix multiplication
+	Matix3d m5 = m1.multiply(m2);
+
+	// matrix-vector multiplication
+	Vector3d v5 = m1.multiply(v1);
+
+	// matrix inverse
+	//Matrix3d m2 = m1.inverse();
 
 	return 0;
 }
