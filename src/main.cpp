@@ -51,10 +51,57 @@ public:
 		return result;
 	}
 
+	Vector3d subtract(const Vector3d &v) const
+	{
+		Vector3d result;
+		for (int i = 0; i < 3; i++)
+		{
+			result.data[i] = data[i] - v.data[i];
+		}
+		return result;
+	}
+
+	double dotProduct(const Vector3d &v) const
+	{
+		double result =0.0;
+		for (int i = 0; i < 3; i++)
+		{
+			result += data[i] * v.data[i];
+		}
+		return result;
+	}
+
+	Vector3d crossProduct(const Vector3d &v) const
+	{
+		Vector3d result;
+
+		result.data[0] = data[1] * v.data[2] - data[2] * v.data[1];
+		result.data[1] = data[0] * v.data[2] - data[2] * v.data[0];
+		result.data[2] = data[0] * v.data[1] - data[1] * v.data[0];
+		return result;
+	}
+
+	// getter
+	double x() const
+	{
+		return data[0];
+	}
+
+	// setter
+	double& x()
+	{
+		return data[0];
+	}
+
 private:
 	// member variables
 	double data[3];
+
+public:
+	// static
+	const static int dim = 3;
 };
+
 
 int main()
 {
@@ -62,7 +109,6 @@ int main()
 	v1.print();
 
 	Vector3d v2(-2.0, 1.0, 2.0);
-
 
 	// add
 	Vector3d v3 = v1.add(v2);
@@ -75,6 +121,12 @@ int main()
 
 	// cross product
 	Vector3d v4 = v1.crossProduct(v2);
+
+	cout << Vector3d::dim << endl;
+
+	cout << v1.x() << endl;
+
+	v1.x() = 5.0;
 
 	return 0;
 }
