@@ -1,2 +1,4 @@
 #exclude visual studio files
 .vs
+.vscode
+build
