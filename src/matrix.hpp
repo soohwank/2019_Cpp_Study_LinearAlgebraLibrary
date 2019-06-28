@@ -2,14 +2,85 @@
 #define _MATRIX3D_HPP_
 
 #include <iostream>
+#include <cassert>
 #include "vector.hpp"
 
 namespace lal
 {
 
-class Vector3d;
+class MatrixXd
+{
+public:
+	// constructor
+	MatrixXd(const size_t rows, const size_t cols)
+		: m_rows(rows), m_cols(cols)
+	{
+		m_ppData = new double*[m_rows];
+		for (size_t i = 0; i < m_rows; i++)
+		{
+			m_ppData[i] = new double[m_cols];
+		}
+	}
 
-class Matrix3d
+	// destructor
+	~MatrixXd()
+	{
+		for (size_t i = 0; i < m_rows; i++)
+		{
+			delete[]  m_ppData[i];
+		}
+		delete[] m_ppData;
+	}
+
+	// addition
+	MatrixXd add(const MatrixXd &m) const
+	{
+		// speicial case
+		assert(m_rows == m.m_rows && m_cols == m.m_cols);
+
+		MatrixXd result;
+		for(size_t row = 0; row < m_rows; row++)
+		{
+			for (size_t col = 0; col < m_cols; col++)
+			{
+				result.m_ppData[row][col] = m_ppData[row][col] + m.m_ppData[row][col];
+			}
+		}
+		return result;
+	}
+
+	// print function
+	void print() const
+	{
+		std::cout << "[";
+		for (int row = 0; row < m_rows; row++)
+		{
+			for (int col = 0; col < m_cols; col++)
+			{
+				std::cout << m_ppData[row][col];
+				if (col != (m_cols-1))std::cout << ", ";
+			}
+			if (row != (m_rows-1))std::cout << std::endl;
+		}
+		std::cout << "]" << std::endl;
+	}
+
+private:
+	MatrixXd()
+		: m_rows(0), m_cols(0)
+	{
+	}
+
+protected:
+	// size
+	const size_t m_rows;
+	const size_t m_cols;
+
+	// data
+	double **m_ppData;
+};
+
+class Matrix3d : public MatrixXd
 {
 public:
 	// default constructor
@@ -47,21 +118,6 @@ public:
 		}
 	}
 
-	// print function
-	void print() const
-	{
-        std::cout << "[";
-		for(int row = 0; row < 3; row++)
-		{
-            for(int col = 0; col < 3; col++)
-            {
-                std::cout << data[row][col];
-                if (col != 2) std::cout << ", ";
-            }
-            if(row != 2) std::cout << std::endl;
-		}
-        std::cout << "]" << std::endl;
-	}
 
 	// addition
 	Matrix3d add(const double s) const

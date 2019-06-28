@@ -32,7 +32,7 @@ int main()
 	(v1.crossProduct(v2)).print();
 
 	//////////////////////////////////////////
-	// matrix
+	// matrix 3d
 	/////////////////////////////////////////
 
 	// matrix
@@ -57,6 +57,47 @@ int main()
 
 	// inverse
 	//(m1.inverse()).print();
+
+	//////////////////////////////////////////
+	// matrix 
+	/////////////////////////////////////////
+
+	MatrixXd m3(4, 3);
+	for(size_t row = 0; row < 4; row++)
+	{
+		for(size_t col = 0; col < 3; col++)
+		{
+			m3(row, col) = row + col;
+		}
+	}
+
+	MatrixXd m4(4, 3);
+	for (size_t row = 0; row < 4; row++)
+	{
+		for (size_t col = 0; col < 3; col++)
+		{
+			m3(row, col) = row * 2;
+		}
+	}
+
+	MatrixXd m5(3, 5);
+	for (size_t row = 0; row < 3; row++)
+	{
+		for (size_t col = 0; col < 5; col++)
+		{
+			m3(row, col) = 2.0;
+		}
+	}
+
+	(m3.add(2.0)).print();
+	(m3.add(m4)).print();
+
+	(m3.subtract(m4)).print();
+	(m3.subtract(3.0)).print();
+
+	(m3.multiply(m5)).print();
+	(m3.multiply(v1)).print();
+	(m3.multiply(2.0)).print();
 
 	return 0;
 }
