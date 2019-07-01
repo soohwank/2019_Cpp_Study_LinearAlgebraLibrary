@@ -41,62 +41,64 @@ int main()
 
 	Matrix3d m2(-1.0, -2.0, -3.0, -4.0, -5.0, -6.0, 7.0, 8.0, 9.0);
 	m2.print();
-
+	
 	// addition
 	(m1.add(m2)).print();
 	(m1.add(1.0)).print();
 
+	
 	// subtraction
 	(m1.subtract(m2)).print();
 	(m1.subtract(1.0)).print();
-
+	
 	// multiplication
 	(m1.multiply(m2)).print();
-	(m1.multiply(v1)).print();
+/*	(m1.multiply(v1)).print();
 	(m1.multiply(2.0)).print();
 
 	// inverse
-	//(m1.inverse()).print();
+	//(m1.inverse()).print();*/
 
 	//////////////////////////////////////////
 	// matrix 
 	/////////////////////////////////////////
-
+	
 	MatrixXd m3(4, 3);
 	for(size_t row = 0; row < 4; row++)
 	{
 		for(size_t col = 0; col < 3; col++)
 		{
-			m3(row, col) = row + col;
+			m3.set(row, col, row + col);
 		}
 	}
-
+	m3.print();
 	MatrixXd m4(4, 3);
 	for (size_t row = 0; row < 4; row++)
 	{
 		for (size_t col = 0; col < 3; col++)
 		{
-			m3(row, col) = row * 2;
+			m4.set(row, col, row * 2);
 		}
 	}
-
+	m4.print();
 	MatrixXd m5(3, 5);
 	for (size_t row = 0; row < 3; row++)
 	{
 		for (size_t col = 0; col < 5; col++)
 		{
-			m3(row, col) = 2.0;
+			m5.set(row, col, row * 2);
 		}
 	}
-
+	m5.print();
+	
 	(m3.add(2.0)).print();
 	(m3.add(m4)).print();
 
 	(m3.subtract(m4)).print();
 	(m3.subtract(3.0)).print();
 
-	(m3.multiply(m5)).print();
-	(m3.multiply(v1)).print();
+	//(m3.multiply(m5)).print();
+	//(m3.multiply(v1)).print();
 	(m3.multiply(2.0)).print();
 
 	return 0;
