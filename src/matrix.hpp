@@ -9,14 +9,10 @@ namespace lal
 
 class MatrixXd
 {
-private:
-	// default constructor
-	MatrixXd()
-	: m_rows(0), m_cols(0)
-	{
-	}
-
 public:
+	// default constructor
+	MatrixXd() = delete;
+
 	// constructor
 	MatrixXd(const size_t rows, const size_t cols)
 	: m_rows(rows), m_cols(cols)
