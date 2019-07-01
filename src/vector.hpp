@@ -2,6 +2,7 @@
 #define _VECTOR3D_HPP_
 
 #include <iostream>
+using namespace std;
 
 namespace lal
 {

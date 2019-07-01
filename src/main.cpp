@@ -1,5 +1,6 @@
 #include "vector.hpp"
 #include "matrix.hpp"
+#include <cassert>
 using namespace lal;
 using namespace std;
 
@@ -63,7 +64,9 @@ int main()
 	/////////////////////////////////////////
 
 	MatrixXd m3(4, 3);
-	for(size_t row = 0; row < 4; row++)
+	MatrixXd m4(4, 3);
+	
+/*	for(size_t row = 0; row < 4; row++)
 	{
 		for(size_t col = 0; col < 3; col++)
 		{
@@ -71,7 +74,6 @@ int main()
 		}
 	}
 
-	MatrixXd m4(4, 3);
 	for (size_t row = 0; row < 4; row++)
 	{
 		for (size_t col = 0; col < 3; col++)
@@ -87,17 +89,17 @@ int main()
 		{
 			m3(row, col) = 2.0;
 		}
-	}
+	}*/
 
-	(m3.add(2.0)).print();
+	//m3.add(2.0).print();
 	(m3.add(m4)).print();
 
 	(m3.subtract(m4)).print();
-	(m3.subtract(3.0)).print();
+	//m3.subtract(3.0).print();
 
-	(m3.multiply(m5)).print();
-	(m3.multiply(v1)).print();
-	(m3.multiply(2.0)).print();
+//	(m3.multiply(m5)).print();
+//	(m3.multiply(v1)).print();
+//	(m3.multiply(2.0)).print();
 
 	return 0;
 }

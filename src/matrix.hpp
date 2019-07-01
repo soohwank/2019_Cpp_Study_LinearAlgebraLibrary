@@ -5,82 +5,101 @@
 #include <cassert>
 #include "vector.hpp"
 
+using namespace std;
+
 namespace lal
 {
 
 class MatrixXd
 {
 public:
-	// constructor
-	MatrixXd(const size_t rows, const size_t cols)
-		: m_rows(rows), m_cols(cols)
+	//default constructor
+	MatrixXd()	
+	: m_rows(0), m_cols(0)
 	{
-		m_ppData = new double*[m_rows];
-		for (size_t i = 0; i < m_rows; i++)
+	}
+
+	MatrixXd(const size_t rows, const size_t cols)
+	:m_rows(rows), m_cols (cols)
+	{
+		m_ppData = new double *[m_rows];
+
+		for(size_t i = 0; i < m_rows ; i++)
 		{
-			m_ppData[i] = new double[m_cols];
+			m_ppData[i] = new double [m_cols];
 		}
 	}
 
-	// destructor
+	//destructor
 	~MatrixXd()
 	{
-		for (size_t i = 0; i < m_rows; i++)
+		for(size_t i = 0; i < m_rows ; i++)
 		{
-			delete[]  m_ppData[i];
+			delete[] m_ppData[i];
+
 		}
 		delete[] m_ppData;
 	}
+	
+	//print function
+	void print()
+	{
+		cout << "[";
+		for(size_t row = 0; row < m_rows ; row++)
+		{
+			for(size_t col = 0; col < m_cols; col++)
+			{
+				cout << m_ppData[row][col];
+				if(col !=(m_cols - 1)) cout << ",";
+			}
+			if(row !=(m_rows - 1)) cout << endl;
+		}
+		cout << "[" << endl;
+	}
 
-	// addition
+
+	// add function
 	MatrixXd add(const MatrixXd &m) const
 	{
-		// speicial case
+		//special case
 		assert(m_rows == m.m_rows && m_cols == m.m_cols);
 
 		MatrixXd result;
 		for(size_t row = 0; row < m_rows; row++)
 		{
-			for (size_t col = 0; col < m_cols; col++)
+			for(size_t col = 0; col < m_cols; col++)
 			{
 				result.m_ppData[row][col] = m_ppData[row][col] + m.m_ppData[row][col];
 			}
 		}
-		return result;
 	}
 
-	// print function
-	void print() const
+	MatrixXd subtract(const MatrixXd &m) const
 	{
-		std::cout << "[";
-		for (int row = 0; row < m_rows; row++)
+		//special case
+		assert(m_rows == m.m_rows && m_cols == m.m_cols);
+
+		MatrixXd result;
+		for(size_t row = 0; row < m_rows; row++)
 		{
-			for (int col = 0; col < m_cols; col++)
+			for(size_t col = 0; col < m_cols; col++)
 			{
-				std::cout << m_ppData[row][col];
-				if (col != (m_cols-1))std::cout << ", ";
+				result.m_ppData[row][col] = m_ppData[row][col] - m.m_ppData[row][col];
 			}
-			if (row != (m_rows-1))std::cout << std::endl;
 		}
-		std::cout << "]" << std::endl;
-	}
-
-private:
-	MatrixXd()
-		: m_rows(0), m_cols(0)
-	{
 	}
 
 protected:
-	// size
+
+	//size
 	const size_t m_rows;
 	const size_t m_cols;
 
-	// data
+	//data
 	double **m_ppData;
 };
 
-class Matrix3d : public MatrixXd
+class Matrix3d  : public MatrixXd
 {
 public:
 	// default constructor
@@ -116,6 +135,23 @@ public:
                 data[row][col] = m.data[row][col];
             }
 		}
+	}
+
+	void print()
+	{
+		
+		for(size_t row = 0; row < 3; row++)
+		{	
+			cout << "[";
+		
+			for(size_t col = 0; col < 3; col++)
+			{
+				cout << data[row][col];
+			}
+			cout << "]" << endl;
+			cout << endl;
+		} 
+		
 	}
 
 
