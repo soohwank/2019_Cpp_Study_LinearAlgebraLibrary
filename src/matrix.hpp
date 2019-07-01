@@ -3,47 +3,170 @@
 
 #include <iostream>
 #include <cassert>
-#include "vector.hpp"
 
 namespace lal
 {
 
 class MatrixXd
 {
+private:
+	// default constructor
+	MatrixXd()
+	: m_rows(0), m_cols(0)
+	{
+	}
+
 public:
 	// constructor
 	MatrixXd(const size_t rows, const size_t cols)
-		: m_rows(rows), m_cols(cols)
+	: m_rows(rows), m_cols(cols)
 	{
-		m_ppData = new double*[m_rows];
-		for (size_t i = 0; i < m_rows; i++)
+		// memory allocation
+		allocateMemory();
+
+		// initialization
+		zero();
+	}
+
+	// copy constructor
+	MatrixXd(const MatrixXd &m)
+	: m_rows(m.m_rows), m_cols(m.m_cols)
+	{
+		// memory allocation
+		allocateMemory();
+
+		// initialization
+		for(size_t row = 0; row < m_rows; row++)
 		{
-			m_ppData[i] = new double[m_cols];
+			for (size_t col = 0; col < m_cols; col++)
+			{
+				m_ppData[row][col] = m.m_ppData[row][col];
+			}
 		}
 	}
 
 	// destructor
 	~MatrixXd()
 	{
-		for (size_t i = 0; i < m_rows; i++)
-		{
-			delete[]  m_ppData[i];
-		}
-		delete[] m_ppData;
+		dellocateMemory();
+	}
+
+	// geter
+	size_t nrows() const
+	{
+		return m_rows;
+	}
+
+	size_t ncols() const
+	{
+		return m_cols;
+	}
+
+	double get(const size_t row, const size_t col) const
+	{
+		// condition check
+		assert(row < m_rows && col < m_cols);
+
+		return m_ppData[row][col];
+	}
+
+	void set(const size_t row, const size_t col, const double value)
+	{
+		// condition check
+		assert(row < m_rows && col < m_cols);
+
+		m_ppData[row][col] = value;
 	}
 
 	// addition
+	MatrixXd add(const double s) const
+	{
+		MatrixXd result(m_rows, m_cols);
+		for(size_t row = 0; row < m_rows; row++)
+		{
+			for (size_t col = 0; col < m_cols; col++)
+			{
+				result.m_ppData[row][col] = m_ppData[row][col] + s;
+			}
+		}
+		return result;
+	}
+
 	MatrixXd add(const MatrixXd &m) const
 	{
-		// speicial case
+		// condition check
 		assert(m_rows == m.m_rows && m_cols == m.m_cols);
 
-		MatrixXd result;
+		MatrixXd result(m_rows, m_cols);
 		for(size_t row = 0; row < m_rows; row++)
 		{
 			for (size_t col = 0; col < m_cols; col++)
 			{
 				result.m_ppData[row][col] = m_ppData[row][col] + m.m_ppData[row][col];
+			}
+		}
+		return result;
+	}
+
+	// subtraction
+	MatrixXd subtract(const double s) const
+	{
+		MatrixXd result(m_rows, m_cols);
+		for(size_t row = 0; row < m_rows; row++)
+		{
+			for (size_t col = 0; col < m_cols; col++)
+			{
+				result.m_ppData[row][col] = m_ppData[row][col] - s;
+			}
+		}
+		return result;
+	}
+
+	MatrixXd subtract(const MatrixXd &m) const
+	{
+		// condition check
+		assert(m_rows == m.m_rows && m_cols == m.m_cols);
+
+		MatrixXd result(m_rows, m_cols);
+		for(size_t row = 0; row < m_rows; row++)
+		{
+			for (size_t col = 0; col < m_cols; col++)
+			{
+				result.m_ppData[row][col] = m_ppData[row][col] - m.m_ppData[row][col];
+			}
+		}
+		return result;
+	}
+
+	// multiplication
+	MatrixXd multiply(const double s) const
+	{
+		MatrixXd result(m_rows, m_cols);
+		for(size_t row = 0; row < m_rows; row++)
+		{
+			for (size_t col = 0; col < m_cols; col++)
+			{
+				result.m_ppData[row][col] = m_ppData[row][col] * s;
+			}
+		}
+		return result;
+	}
+
+	MatrixXd multiply(const MatrixXd &m) const
+	{
+		// condition check
+		assert(m_cols == m.m_rows);
+
+		MatrixXd result(m_rows, m.m_cols);
+		for(size_t row = 0; row < m_rows; row++)
+		{
+			for (size_t col = 0; col < m.m_cols; col++)
+			{
+				result.m_ppData[row][col] = 0.0;
+				for(size_t i = 0; i < m_cols; i++)
+				{
+					result.m_ppData[row][col] += m_ppData[row][i] * m.m_ppData[i][col];
+				}
 			}
 		}
 		return result;
@@ -65,10 +188,38 @@ public:
 		std::cout << "]" << std::endl;
 	}
 
-private:
-	MatrixXd()
-		: m_rows(0), m_cols(0)
+	// zero
+	void zero()
 	{
+		for (int row = 0; row < m_rows; row++)
+		{
+			for (int col = 0; col < m_cols; col++)
+			{
+				m_ppData[row][col] = 0.0;
+			}
+		}
+	}
+
+protected:
+	void allocateMemory()
+	{
+		// memory allocation
+		m_ppData = new double*[m_rows];
+		for (size_t i = 0; i < m_rows; i++)
+		{
+			m_ppData[i] = new double[m_cols];
+		}
+	}
+
+	void dellocateMemory()
+	{
+		// memory dellocation
+		for (size_t i = 0; i < m_rows; i++)
+		{
+			delete []  m_ppData[i];
+		}
+		delete [] m_ppData;
+		m_ppData = NULL;
 	}
 
 protected:
@@ -85,146 +236,73 @@ class Matrix3d : public MatrixXd
 public:
 	// default constructor
 	Matrix3d()
+	: MatrixXd(3, 3)
 	{
-		// zero initialization
-		for(int row = 0; row < 3; row++)
-		{
-            for(int col = 0; col < 3; col++)
-            {
-                data[row][col] = 0.0;
-            }
-		}
 	}
 
 	// constructor
 	Matrix3d(const double m00, const double m01, const double m02,
              const double m10, const double m11, const double m12,
              const double m20, const double m21, const double m22)
+	: MatrixXd(3, 3)
 	{
-		data[0][0] = m00; data[0][1] = m01; data[0][2] = m02;
-		data[1][0] = m10; data[1][1] = m11; data[1][2] = m12;
-		data[2][0] = m20; data[2][1] = m21; data[2][2] = m22;
+		m_ppData[0][0] = m00; m_ppData[0][1] = m01; m_ppData[0][2] = m02;
+		m_ppData[1][0] = m10; m_ppData[1][1] = m11; m_ppData[1][2] = m12;
+		m_ppData[2][0] = m20; m_ppData[2][1] = m21; m_ppData[2][2] = m22;
 	}
 
-	// constructor
+	// copy constructor
 	Matrix3d(const Matrix3d &m)
+	: MatrixXd(m)
 	{
-		for(int row = 0; row < 3; row++)
-		{
-            for(int col = 0; col < 3; col++)
-            {
-                data[row][col] = m.data[row][col];
-            }
-		}
 	}
 
-
-	// addition
-	Matrix3d add(const double s) const
+	// determinant
+	double determinant() const
 	{
-		Matrix3d result;
-		for(int row = 0; row < 3; row++)
-		{
-            for(int col = 0; col < 3; col++)
-            {
-                result.data[row][col] = data[row][col] + s;
-            }
-		}
-		return result;
+		const double &a11 = m_ppData[0][0];
+		const double &a12 = m_ppData[0][1];
+		const double &a13 = m_ppData[0][2];
+
+		const double &a21 = m_ppData[1][0];
+		const double &a22 = m_ppData[1][1];
+		const double &a23 = m_ppData[1][2];
+
+		const double &a31 = m_ppData[2][0];
+		const double &a32 = m_ppData[2][1];
+		const double &a33 = m_ppData[2][2];
+
+		return a11*(a22*a33 - a23*a32) 
+		     + a12*(a23*a31 - a21*a33) 
+			 + a13*(a21*a32 - a22*a31);
 	}
 
-	Matrix3d add(const Matrix3d &m) const
+	Matrix3d inverse() const
 	{
-		Matrix3d result;
-		for(int row = 0; row < 3; row++)
-		{
-            for(int col = 0; col < 3; col++)
-            {
-                result.data[row][col] = data[row][col] + m.data[row][col];
-            }
-		}
-		return result;
+		const double &a11 = m_ppData[0][0];
+		const double &a12 = m_ppData[0][1];
+		const double &a13 = m_ppData[0][2];
+
+		const double &a21 = m_ppData[1][0];
+		const double &a22 = m_ppData[1][1];
+		const double &a23 = m_ppData[1][2];
+
+		const double &a31 = m_ppData[2][0];
+		const double &a32 = m_ppData[2][1];
+		const double &a33 = m_ppData[2][2];
+
+		const double inv_det = 1.0/determinant();
+
+		return Matrix3d(inv_det*(a22*a33-a23*a32),
+						inv_det*(a13*a32-a12*a33),
+						inv_det*(a12*a23-a13*a22),
+						inv_det*(a23*a31-a21*a33),
+						inv_det*(a11*a33-a13*a31),
+						inv_det*(a13*a21-a11*a23),
+						inv_det*(a21*a32-a22*a31),
+						inv_det*(a12*a31-a11*a32),
+						inv_det*(a11*a22-a12*a21));
 	}
-
-    // subtraction
-	Matrix3d subtract(const Matrix3d &m) const
-	{
-		Matrix3d result;
-		for(int row = 0; row < 3; row++)
-		{
-            for(int col = 0; col < 3; col++)
-            {
-                result.data[row][col] = data[row][col] - m.data[row][col];
-            }
-		}
-		return result;
-	}
-
-	Matrix3d subtract(const double s) const
-	{
-		Matrix3d result;
-		for(int row = 0; row < 3; row++)
-		{
-            for(int col = 0; col < 3; col++)
-            {
-                result.data[row][col] = data[row][col] - s;
-            }
-		}
-		return result;
-	}
-
-    // multiplication
-	Matrix3d multiply(const Matrix3d &m) const
-	{
-		Matrix3d result;
-		for(int row = 0; row < 3; row++)
-		{
-            for(int col = 0; col < 3; col++)
-            {
-                result.data[row][col] = 0.0;
-                for(int i = 0; i < 3; i++)
-                {
-                    result.data[row][col] += data[row][i] * m.data[i][col];
-                }
-            }
-		}
-		return result;
-	}
-
-	Vector3d multiply(const Vector3d &v) const
-	{
-		Vector3d result;
-		for(int row = 0; row < 3; row++)
-		{
-            result.data[row] = 0.0;
-            for(int i = 0; i < 3; i++)
-            {
-                result.data[row] += data[row][i] * v.data[i];
-            }
-		}
-		return result;
-	}
-
-	Matrix3d multiply(const double s) const
-	{
-		Matrix3d result;
-		for(int row = 0; row < 3; row++)
-		{
-            for(int col = 0; col < 3; col++)
-            {
-                result.data[row][col] = data[row][col] * s;
-            }
-		}
-		return result;
-	}
-
-private:
-	// member variables
-	double data[3][3];
-
-public:
-	// static
-	const static int dim = 3;
 };
 
 } // namespace lal
