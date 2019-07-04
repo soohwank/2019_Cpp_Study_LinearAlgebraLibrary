@@ -29,7 +29,7 @@ public:
 					<< data[2] << "]" << endl;
 	}
 
-	//add
+	//addition
 	Vector3d add(const Vector3d &v)const
 	{
 		Vector3d result;

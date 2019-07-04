@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/min-su/Desktop/Projects/2019_Cpp_Study_LinearAlgebraLibrary/src/main.cpp
+vector.hpp
+/home/min-su/Desktop/Projects/2019_Cpp_Study_LinearAlgebraLibrary/src/vector.hpp
+matrix.hpp
+/home/min-su/Desktop/Projects/2019_Cpp_Study_LinearAlgebraLibrary/src/matrix.hpp
+cassert
+-
+
+/home/min-su/Desktop/Projects/2019_Cpp_Study_LinearAlgebraLibrary/src/matrix.hpp
+iostream
+-
+cassert
+-
+vector.hpp
+/home/min-su/Desktop/Projects/2019_Cpp_Study_LinearAlgebraLibrary/src/vector.hpp
+
+/home/min-su/Desktop/Projects/2019_Cpp_Study_LinearAlgebraLibrary/src/vector.hpp
+iostream
+-
+
