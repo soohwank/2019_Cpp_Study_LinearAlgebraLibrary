@@ -55,7 +55,7 @@ namespace lal
 		}
 
 		// addition
-		MatrixXd add(const MatrixXd &m) const
+		MatrixXd operator+(const MatrixXd &m) const
 		{
 			// speicial case
 			assert(m_rows == m.m_rows && m_cols == m.m_cols);
@@ -71,7 +71,7 @@ namespace lal
 			return result;
 		}
 
-		MatrixXd add(const double s) const
+		MatrixXd operator+(const double s) const
 		{
 			// speicial case
 			
@@ -87,7 +87,7 @@ namespace lal
 		}
 
 		// subtraction
-		MatrixXd subtract(const MatrixXd &m) const
+		MatrixXd operator-(const MatrixXd &m) const
 		{
 			// speicial case
 			assert(m_rows == m.m_rows && m_cols == m.m_cols);
@@ -103,7 +103,7 @@ namespace lal
 			return result;
 		}
 
-		MatrixXd subtract(const double s) const
+		MatrixXd operator-(const double s) const
 		{
 			// speicial case
 			assert(m_rows == m_rows && m_cols == m_cols);
@@ -120,7 +120,7 @@ namespace lal
 		}
 
 		// multiplication
-		MatrixXd multiply(const MatrixXd &m) const
+		MatrixXd operator*(const MatrixXd &m) const
 		{
 			// speicial case
 			assert(m_cols == m.m_rows);
@@ -140,7 +140,7 @@ namespace lal
 			return result;
 		}
 
-		Vector3d multiply(const Vector3d &v) const
+		Vector3d operator*(const Vector3d &v) const
 		{
 			Vector3d result;
 			for (int row = 0; row < 3; row++)
@@ -154,7 +154,7 @@ namespace lal
 			return result;
 		}
 
-		MatrixXd multiply(const double s) const
+		MatrixXd operator*(const double s) const
 		{
 			MatrixXd result(m_rows, m_cols);
 			for (int row = 0; row < m_rows; row++)
@@ -201,7 +201,27 @@ namespace lal
 
 		// data
 		double **m_ppData;
+
+		// friend
+		friend std::ostream& operator<<(std::ostream &os, const MatrixXd &m);
 	};
+
+	std::ostream& operator<<(std::ostream &os, const MatrixXd &m)
+	{
+		os << "[";
+		for (int row = 0; row < m.m_rows; row++)
+		{
+			for (int col = 0; col < m.m_cols; col++)
+			{
+				os << m.m_ppData[row][col];
+				if (col != (m.m_cols - 1))os << ", ";
+			}
+			if (row != (m.m_rows - 1))os << std::endl;
+		}
+		os << "]" << std::endl;
+
+		return os;
+	}
 
 	//////////////////////////////////////////
 	// class Matrix3d 

@@ -43,7 +43,7 @@ namespace lal
 		}
 
 		// addition
-		Vector3d add(const Vector3d &v) const
+		Vector3d operator+(const Vector3d &v) const
 		{
 			Vector3d result;
 			for (int i = 0; i < 3; i++)
@@ -53,7 +53,7 @@ namespace lal
 			return result;
 		}
 
-		Vector3d add(const double s) const
+		Vector3d operator+(const double s) const
 		{
 			Vector3d result;
 			for (int i = 0; i < 3; i++)
@@ -64,7 +64,7 @@ namespace lal
 		}
 
 		// subtraction
-		Vector3d subtract(const Vector3d &v) const
+		Vector3d operator-(const Vector3d &v) const
 		{
 			Vector3d result;
 			for (int i = 0; i < 3; i++)
@@ -74,7 +74,7 @@ namespace lal
 			return result;
 		}
 
-		Vector3d subtract(const double s) const
+		Vector3d operator-(const double s) const
 		{
 			Vector3d result;
 			for (int i = 0; i < 3; i++)
@@ -85,7 +85,7 @@ namespace lal
 		}
 
 		// multiplication
-		Vector3d multiply(const double s) const
+		Vector3d operator*(const double s) const
 		{
 			Vector3d result;
 			for (int i = 0; i < 3; i++)
@@ -96,7 +96,7 @@ namespace lal
 		}
 
 		// dot product
-		double dotProduct(const Vector3d &v) const
+		double operator^(const Vector3d &v) const
 		{
 			double result = 0.0;
 			for (int i = 0; i < 3; i++)
@@ -107,7 +107,7 @@ namespace lal
 		}
 
 		// cross product
-		Vector3d crossProduct(const Vector3d &v) const
+		Vector3d operator*(const Vector3d &v) const
 		{
 			Vector3d result;
 
@@ -149,7 +149,7 @@ namespace lal
 			return data[2];
 		}
 
-	private:
+	protected:
 		// member variables
 		double data[3];
 
@@ -157,9 +157,15 @@ namespace lal
 		// static
 		const static int dim = 3;
 
-		friend class Matrix3d;
-		friend class MatrixXd;
+		friend std::ostream& operator<<(std::ostream &os, const Vector3d &v);
 	};
+
+	std::ostream& operator<<(std::ostream &os, const Vector3d &v)
+	{
+		os << "[" << v.data[0] << ", " << v.data[1] << ", " << v.data[2] << "]" << std::endl;
+
+		return os;
+	}
 
 } // namespace lal
 #endif // _VECTOR3D_HPP_

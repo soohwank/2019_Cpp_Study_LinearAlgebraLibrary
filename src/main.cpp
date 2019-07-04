@@ -15,21 +15,21 @@ int main()
 	v2.print();
 
 	// addition
-	(v1.add(v2)).print();
-	(v1.add(1.0)).print();
+	(v1 + v2).print();
+	(v1 + 1.0).print();
 
 	// subtracttion
-	(v1.subtract(v2)).print();
-	(v1.subtract(1.0)).print();
+	(v1 - v2).print();
+	(v1 - 1.0).print();
 
 	// multiplication
-	(v1.multiply(2.0)).print();
+	(v1 * 2.0).print();
 
 	// dot product
-	cout << v1.dotProduct(v2) << endl;
+	cout << (v1 ^ v2) << endl;
 
 	// cross product
-	(v1.crossProduct(v2)).print();
+	(v1 * v2).print();
 
 	//////////////////////////////////////////
 	// matrix 3d
@@ -37,23 +37,23 @@ int main()
 
 	// matrix
 	Matrix3d m1(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
-	m1.print();
+	cout << m1 << endl;
 
 	Matrix3d m2(-1.0, -2.0, -3.0, -4.0, -5.0, -6.0, 7.0, 8.0, 9.0);
-	m2.print();
+	cout << m2 << endl;
 	
 	// addition
-	(m1.add(m2)).print();
-	(m1.add(1.0)).print();
+	cout << (m1 + m2) << endl;
+	cout << (m1 + 1.0) << endl;
 
 	// subtraction
-	(m1.subtract(m2)).print();
-	(m1.subtract(1.0)).print();
+	cout << (m1 - m2) << endl;
+	cout << (m1 - 1.0) << endl;
 
 	// multiplication
-	(m1.multiply(m2)).print();
-	(m1.multiply(v1)).print();
-	(m1.multiply(2.0)).print();
+	cout << (m1 * m2) << endl;
+	cout << (m1 * v1) << endl;
+	cout << (m1 * 2.0) << endl;
 
 	// inverse
 	//(m1.inverse()).print();
@@ -89,15 +89,15 @@ int main()
 		}
 	}
 
-	(m3.add(2.0)).print();
-	(m3.add(m4)).print();
-	m3.print();
-	(m3.subtract(m4)).print();
-	(m3.subtract(3.0)).print();
+	cout << (m3 + 2.0) << endl;
+	cout << (m3 + m4) << endl;
+	cout << m3 << endl;
+	cout << (m3 - m4) << endl;
+	cout << (m3 - 3.0) << endl;
 
-	(m3.multiply(m5)).print();
-	(m3.multiply(v1)).print();
-	(m3.multiply(2.0)).print();
+	cout << (m3 * m5) << endl;
+	cout << (m3 * v1) << endl;
+	cout << (m3 * 2.0) << endl;
 	
 	return 0;
 }
