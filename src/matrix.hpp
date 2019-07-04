@@ -4,8 +4,6 @@
 #include <iostream>
 #include <cassert>
 
-using namespace std;
-
 namespace lal
 {
 
@@ -137,7 +135,7 @@ public:
 	}
 
 	// multiplication
-	MatrixXd operator-(const double s) const
+	MatrixXd operator*(const double s) const
 	{
 		MatrixXd result(m_rows, m_cols);
 		for(size_t row = 0; row < m_rows; row++)
@@ -227,7 +225,27 @@ protected:
 
 	// data
 	double **m_ppData;
+
+	// friend
+	friend std::ostream& operator<<(std::ostream &os, const MatrixXd &m);
 };
+
+std::ostream& operator<<(std::ostream &os, const MatrixXd &m)
+{
+	os << "[";
+	for (int row = 0; row < m.m_rows; row++)
+	{
+		for (int col = 0; col < m.m_cols; col++)
+		{
+			os << m.m_ppData[row][col];
+			if (col != (m.m_cols-1)) os << ", ";
+		}
+		if (row != (m.m_rows-1)) os << std::endl;
+	}
+	os << "]" << std::endl;
+
+	return os;
+}
 
 class Matrix3d : public MatrixXd
 {
