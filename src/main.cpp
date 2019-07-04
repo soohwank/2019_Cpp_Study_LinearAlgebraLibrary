@@ -20,7 +20,7 @@ int main()
 
 	// addition
 	cout << "v1 + v2 = ";
-	(v1.add(v2)).print();
+	(v1 + v2)print();
 	cout << endl;
 
 	cout << "v1 + 1 = ";

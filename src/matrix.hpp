@@ -4,6 +4,8 @@
 #include <iostream>
 #include <cassert>
 
+using namespace std;
+
 namespace lal
 {
 
@@ -75,7 +77,7 @@ public:
 	}
 
 	// addition
-	MatrixXd add(const double s) const
+	MatrixXd operator+(const double s) const
 	{
 		MatrixXd result(m_rows, m_cols);
 		for(size_t row = 0; row < m_rows; row++)
@@ -88,7 +90,7 @@ public:
 		return result;
 	}
 
-	MatrixXd add(const MatrixXd &m) const
+	MatrixXd operator+(const MatrixXd &m) const
 	{
 		// condition check
 		assert(m_rows == m.m_rows && m_cols == m.m_cols);
@@ -105,7 +107,7 @@ public:
 	}
 
 	// subtraction
-	MatrixXd subtract(const double s) const
+	MatrixXd operator-(const double s) const
 	{
 		MatrixXd result(m_rows, m_cols);
 		for(size_t row = 0; row < m_rows; row++)
@@ -118,7 +120,7 @@ public:
 		return result;
 	}
 
-	MatrixXd subtract(const MatrixXd &m) const
+	MatrixXd operator-(const MatrixXd &m) const
 	{
 		// condition check
 		assert(m_rows == m.m_rows && m_cols == m.m_cols);
@@ -135,7 +137,7 @@ public:
 	}
 
 	// multiplication
-	MatrixXd multiply(const double s) const
+	MatrixXd operator-(const double s) const
 	{
 		MatrixXd result(m_rows, m_cols);
 		for(size_t row = 0; row < m_rows; row++)
@@ -148,7 +150,7 @@ public:
 		return result;
 	}
 
-	MatrixXd multiply(const MatrixXd &m) const
+	MatrixXd operator*(const MatrixXd &m) const
 	{
 		// condition check
 		assert(m_cols == m.m_rows);
