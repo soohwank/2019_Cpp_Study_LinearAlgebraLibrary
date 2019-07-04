@@ -7,7 +7,7 @@ using namespace std;
 namespace lal
 {
 
-class Vector3d
+class Vector3d 
 {
 public:
 	// default constructor
@@ -151,7 +151,7 @@ public:
         return data[2];
     }
 
-private:
+protected:
 	// member variables
 	double data[3];
 

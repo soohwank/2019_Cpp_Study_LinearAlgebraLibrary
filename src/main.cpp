@@ -10,7 +10,7 @@ int main()
 	// vector
 	/////////////////////////////////////////
 	Vector3d v1(1.0, 2.0, 3.0);
-	v1.print();
+	/*/v1.print();
 
 	Vector3d v2(-2.0, 1.0, 2.0);
 	v2.print();
@@ -30,7 +30,7 @@ int main()
 	cout << v1.dotProduct(v2) << endl;
 
 	// cross product
-	(v1.crossProduct(v2)).print();
+	(v1.crossProduct(v2)).print();*/
 
 	//////////////////////////////////////////
 	// matrix 3d
@@ -40,21 +40,28 @@ int main()
 	Matrix3d m1(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
 	m1.print();
 
-	Matrix3d m2(-1.0, -2.0, -3.0, -4.0, -5.0, -6.0, 7.0, 8.0, 9.0);
+	Matrix3d m2(-1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0, -8.0, -9.0);
 	m2.print();
 
 	// addition
+	cout << "m1 + m2" << endl;
 	(m1.add(m2)).print();
+	cout << "m1 + 1" << endl ;
 	(m1.add(1.0)).print();
 
 	// subtraction
+	cout << "m1 - m2" << endl ;
 	(m1.subtract(m2)).print();
+	cout << "m1 - 1" << endl ;
 	(m1.subtract(1.0)).print();
-
+	
 	// multiplication
+	cout << "m1 x m2" << endl;
 	(m1.multiply(m2)).print();
-	(m1.multiply(v1)).print();
+	cout << "m1 x 2" << endl;
 	(m1.multiply(2.0)).print();
+	//(m1.multiply(v1)).print();
+
 
 	// inverse
 	//(m1.inverse()).print();
@@ -66,11 +73,11 @@ int main()
 	MatrixXd m3(4, 3);
 	MatrixXd m4(4, 3);
 	
-/*	for(size_t row = 0; row < 4; row++)
+	for(size_t row = 0; row < 4; row++)
 	{
 		for(size_t col = 0; col < 3; col++)
 		{
-			m3(row, col) = row + col;
+			m3.set(row, col, row + col);
 		}
 	}
 
@@ -78,7 +85,7 @@ int main()
 	{
 		for (size_t col = 0; col < 3; col++)
 		{
-			m3(row, col) = row * 2;
+			m3.set(row, col, row * 2);
 		}
 	}
 
@@ -87,14 +94,17 @@ int main()
 	{
 		for (size_t col = 0; col < 5; col++)
 		{
-			m3(row, col) = 2.0;
+			m3.set(row, col,2.0);
 		}
-	}*/
+	}
 
-	//m3.add(2.0).print();
+	cout << "m3 + 2";
+	m3.add(2.0).print();
+	cout << endl << "m3 + m4";
 	(m3.add(m4)).print();
+	cout << endl << "m3 - m4";
 
-	(m3.subtract(m4)).print();
+//	(m3.subtract(m4)).print();
 	//m3.subtract(3.0).print();
 
 //	(m3.multiply(m5)).print();
