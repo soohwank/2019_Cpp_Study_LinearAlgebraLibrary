@@ -1,5 +1,7 @@
 #include "vector.hpp"
 #include "matrix.hpp"
+#include <memory>
+#include <vector>
 using namespace lal;
 using namespace std;
 
@@ -9,46 +11,53 @@ int main()
 	// vector
 	/////////////////////////////////////////
 	Vector3d v1(1.0, 2.0, 3.0);
-	cout << "v1 = ";
-	v1.print();
-	cout << endl;
+	cout << "v1 = " << v1 << endl;
+	(cout << v1) << endl;
 
 	Vector3d v2(-2.0, 1.0, 2.0);
-	cout << "v2 = ";
-	v2.print();
-	cout << endl;
+	cout << "v2 = " << v2 << endl;
 
 	// addition
-	cout << "v1 + v2 = ";
-	(v1.add(v2)).print();
-	cout << endl;
+	cout << "v1 + v2 = " << v1 + v2 << endl;
 
 	cout << "v1 + 1 = ";
-	(v1.add(1.0)).print();
+	(v1 + 1.0).print();
+	cout << endl;
+
+	cout << "1 + v1 = ";
+	(1.0 + v1).print();
 	cout << endl;
 
 	// subtracttion
 	cout << "v1 - v2 = ";
-	(v1.subtract(v2)).print();
+	(v1 - v2).print();
 	cout << endl;
 
 	cout << "v1 - 1 = ";
-	(v1.subtract(1.0)).print();
+	(v1 - 1.0).print();
+	cout << endl;
+
+	cout << "1 + v1 = ";
+	(1.0 - v1).print();
 	cout << endl;
 
 	// multiplication
 	cout << "v1 * 2 = ";
-	(v1.multiply(2.0)).print();
+	(v1 * 2.0).print();
+	cout << endl;
+
+	cout << "v1 * 2 = ";
+	(2.0 * v1).print();
 	cout << endl;
 
 	// dot product
 	cout << "v1 . v2 = ";
-	cout << v1.dotProduct(v2) << endl;
+	cout << v1^v2 << endl;
 	cout << endl;
 
 	// cross product
 	cout << "v1 x v2 = ";
-	(v1.crossProduct(v2)).print();
+	(v1*v2).print();
 	cout << endl;
 
 	//////////////////////////////////////////
@@ -172,6 +181,8 @@ int main()
 	cout << "m3 * 2 = ";
 	(m3.multiply(2.0)).print();
 	cout << endl;
+
+	// operator overloading
 
 	return 0;
 }
