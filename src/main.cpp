@@ -1,301 +1,188 @@
-#include <iostream>
+#include "vector.hpp"
+#include "matrix.hpp"
+#include <memory>
+#include <vector>
+using namespace lal;
 using namespace std;
-
-class Vector3d
-{
-public:
-	//default constructor
-	Vector3d()
-	{
-		for(int i = 0; i<3 ;i++)
-		{
-			data[i] = 0;
-		}
-	}
-
-	//constructor
-	Vector3d (const double x, const double y, const double z)
-	{
-		data[0] = x;
-		data[1] = y;
-		data[2] = z;
-	}
-
-	//print function 
-	void print() const // don't change member variables you have to use 'const' keyword -> end of functions.
-	{
-		cout << "[" << data[0] << "," 
-			 		<< data[1] << "," 
-					<< data[2] << "]" << endl;
-	}
-
-	//addition
-	Vector3d add(const Vector3d &v)const
-	{
-		Vector3d result;
-
-		for(int i = 0; i < 3 ; i++)
-		{
-			result.data[i] = data[i] + v.data[i];
-		}
-
-		cout << "Vector addition : ";
-		return result;
-	}
-
-	Vector3d scalar_add(const double v)const
-	{
-		Vector3d result;
-
-		for(int i = 0; i < 3 ; i++)
-		{
-			result.data[i] = data[i] + v;
-		}
-
-		cout << "scalar addition : ";
-		return result;
-	}
-
-	Vector3d subtract(const Vector3d &vs) const
-	{
-		Vector3d vecsub;
-
-		for(int i  = 0 ; i < 3 ; i++)
-		{
-			vecsub.data[i] = data[i]- vs.data[i];
-		}
-
-		cout << "Vector subtraction : ";
-		return vecsub;
-	}
-
-	Vector3d scalar_subtract(const double v) const
-	{
-		Vector3d result;
-
-		for(int i = 0; i < 3 ; i++)
-		{
-			result.data[i] = data[i] - v;
-		}
-		
-		cout << "scalar subtraction : ";
-		return result;
-	}
-
-	Vector3d scalar_multiply(const double v) const
-	{
-		Vector3d result;
-		
-		for(int i  = 0 ; i < 3 ; i++)
-		{
-			result.data[i] = data[i] * v;
-		}
-
-		cout << "scalar multiplication : ";
-		return result;
-	}
-
-	double dotProduct(Vector3d &vd) const
-	{
-		double vecdot = 0;
-
-		for(int i = 0; i < 3 ; i++)
-		{
-			vecdot += data[i] * vd.data[i]; 
-		}
-		
-		cout << "Vector dotproduct : ";
-		return vecdot;
-	}
-
-	Vector3d crossProduct(Vector3d &vc)
-	{
-		Vector3d veccross;
-
-		veccross.data[0] = data[1]*vc.data[2] - data[2]*vc.data[1];
-		veccross.data[1] = data[0]*vc.data[2] - data[2]*vc.data[0];
-		veccross.data[2] = data[0]*vc.data[1] - data[1]*vc.data[0];
-
-		cout << "Vector crossproduct : ";
-		return veccross; 	
-	}
-
-private:
-	//member variables
-	double data[3];
-};
-
-//Matrix 
-class Matrix3d
-{
-public:
-	//default constructor
-	Matrix3d()
-	{
-		for(int i = 0 ; i < 9 ; i++)
-		{
-			component[i] = 0;
-		}
-	}
-
-	//constructor
-	Matrix3d(const double a, const double b, const double c,
-			 const double d, const double e, const double f,
-			 const double g, const double h, const double k)
-		{	 
-			for(int i = 0 ; i < 9 ; i++)
-			{
-				component[0] = a; component[1] = b; component[2] = c;
-				component[3] = d; component[4] = e; component[5] = f;
-				component[6] = g; component[7] = h; component[8] = k;	
-			}
-		}
-
-	//print Matrix
-	void print() const
-	{
-		cout << "|";
-		for(int i = 0 ; i<9 ; i++)
-		{
-			cout <<  component[i] ; 
-			
-			if(i == 2 | i == 5)
-			{	
-				cout << "|" << endl << "|";
-			}
-		}
-
-		cout << "|";
-		cout << endl;
-	}
-
-	Matrix3d add(const Matrix3d & ma) const
-	{
-		Matrix3d result;
-		for(int i = 0 ; i < 9 ; i++)
-		{
-			result.component[i] = component[i] + ma.component[i];
-		}
-		
-		return result;
-	}
-
-	Matrix3d subtract(const Matrix3d & ms) const
-	{
-		Matrix3d result;
-		for(int i = 0 ; i < 9 ; i++)
-		{
-			result.component[i] = component[i] - ms.component[i];
-		}
-		
-		return result;
-	}
-
-	Matrix3d multiply(const Matrix3d & ms) const
-	{
-		Matrix3d result;
-		int j = 0;
-		int cnt = 0;
-
-		for(int k = 0 ; k < 9 ; k++)
-		{	
-			for(int l = 0 ; l < 3 ; l++)
-			{	
-				for(int i = 0 ; i < 3 ; i++)
-				{
-					 l = cnt+1;
-						result.component[k] += component[i] * ms.component[j];	
-						
-						j++;
-						j = i+3;
-				}
-				cnt++;
-			}
-		}
-
-		return result;
-	}
-
-	/* double vector_matrix_multiply(const Vector3d & vm) const
-	{
-		double result;
-		for(int i = 0 ; i < 9 ; i++)
-		{
-			result = component[i] * vm[i];
-		}
-		
-		return result;
-	}*/
-
-private:
-	double component[9];
-};
 
 int main()
 {
-	//cout << "hello world" << endl;
+	//////////////////////////////////////////
+	// vector
+	/////////////////////////////////////////
 	Vector3d v1(1.0, 2.0, 3.0);
-	v1.print();
+	cout << "v1 = " << v1 << endl;
+	(cout << v1) << endl;
 
-	Vector3d v2(-2.0, 1.0 , 2.0);
+	Vector3d v2(-2.0, 1.0, 2.0);
+	cout << "v2 = " << v2 << endl;
 
-	//add
-	Vector3d v3 = v1.add(v2);
-	v3.print();
+	// addition
+	cout << "v1 + v2 = " << v1 + v2 << endl;
 
-	//subtract
-	Vector3d v4 = v1.subtract(v2);
-	v4.print();
+	cout << "v1 + 1 = ";
+	(v1 + 1.0).print();
+	cout << endl;
 
-	//dot product
-	double dotProduct = v1.dotProduct(v2);
-	cout << dotProduct << endl;
+	cout << "1 + v1 = ";
+	(1.0 + v1).print();
+	cout << endl;
 
-	//cross product
-	Vector3d v5 = v1.crossProduct(v2);
-	v5.print();
+	// subtracttion
+	cout << "v1 - v2 = ";
+	(v1 - v2).print();
+	cout << endl;
 
+	cout << "v1 - 1 = ";
+	(v1 - 1.0).print();
+	cout << endl;
 
-	// scalar addition
-	Vector3d v6 = v1.scalar_add(3.0);
-	v6.print();
-	
-	// scalar subtraction
-	Vector3d v7 = v1.scalar_subtract(3.0);
-	v7.print();
+	cout << "1 + v1 = ";
+	(1.0 - v1).print();
+	cout << endl;
 
-	// scalar multiplication
-	Vector3d v8 = v1.scalar_multiply(3.0);
-	v8.print();
+	// multiplication
+	cout << "v1 * 2 = ";
+	(v1 * 2.0).print();
+	cout << endl;
+
+	cout << "v1 * 2 = ";
+	(2.0 * v1).print();
+	cout << endl;
+
+	// dot product
+	cout << "v1 . v2 = ";
+	cout << v1^v2 << endl;
+	cout << endl;
+
+	// cross product
+	cout << "v1 x v2 = ";
+	(v1*v2).print();
+	cout << endl;
+
+	//////////////////////////////////////////
+	// matrix 3d
+	/////////////////////////////////////////
 
 	// matrix
 	Matrix3d m1(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0);
+	cout << "m1 = ";
 	m1.print();
+	cout << endl;
 
-	Matrix3d m2(-1.0, -2.0, -3.0, -4.0, -5.0, -6.0, -7.0, -8.0, -9.0);
+	Matrix3d m2(-1.0, -2.0, -3.0, -4.0, -5.0, -6.0, 7.0, 8.0, 9.0);
+	cout << "m2 = ";
 	m2.print();
+	cout << endl;
 
-	// matrix addition
-	Matrix3d m3 = m1.add(m2);
+	// addition
+	cout << "m1 + m2 = ";
+	(m1 + m2).print();
+	cout << endl;
+
+	cout << "m1 + 1 = ";
+	(m1 + 1.0).print();
+	cout << endl;
+
+	// subtraction
+	cout << "m1 - m2 = ";
+	(m1 - m2).print();
+	cout << endl;
+
+	cout << "m1 - 1 = ";
+	(m1 - 1.0).print();
+	cout << endl;
+
+	// multiplication
+	cout << "m1 * m2 = ";
+	(m1 * m2).print();
+	cout << endl;
+
+	cout << "m1 * v1 = ";
+	(m1 * v1).print();
+	cout << endl;
+
+	cout << "m1 * 2 = ";
+	(m1 * 2.0).print();
+	cout << endl;
+
+	// inverse
+	cout << "inv(m1) = ";
+	(m1.inverse()).print();
+	cout << endl;
+
+	//////////////////////////////////////////
+	// matrix 
+	/////////////////////////////////////////
+
+	MatrixXd m3(4, 3);
+	for(size_t row = 0; row < 4; row++)
+	{
+		for(size_t col = 0; col < 3; col++)
+		{
+			m3.set(row, col, row + col);
+		}
+	}
+	cout << "m3 = ";
 	m3.print();
+	cout << endl;
 
-	// matrix subtraction
-	Matrix3d m4 = m1.subtract(m2);
+	MatrixXd m4(4, 3);
+	for (size_t row = 0; row < 4; row++)
+	{
+		for (size_t col = 0; col < 3; col++)
+		{
+			m4.set(row, col, row * 2);
+		}
+	}
+	cout << "m4 = ";
 	m4.print();
+	cout << endl;
 
-	// matrix multiplication
-	Matrix3d m5 = m1.multiply(m2);
+	// addition
+	cout << "m3 + 2 = ";
+	(m3 + 2.0).print();
+	cout << endl;
+
+	cout << "m3 + m4 = ";
+	(m3 + m4).print();
+	cout << endl;
+
+	// subtraction
+	cout << "m3 - m4 = ";
+	(m3 - m4).print();
+	cout << endl;
+
+	cout << "m3 - 3 = ";
+	(m3 - 3.0).print();
+	cout << endl;
+
+	MatrixXd m5(3, 5);
+	for (size_t row = 0; row < 3; row++)
+	{
+		for (size_t col = 0; col < 5; col++)
+		{
+			m5.set(row, col, 2.0);
+		}
+	}
+	cout << "m5 = ";
 	m5.print();
+	cout << endl;
 
-	//cout << v1.x() << endl;
-	// matrix-vector multiplication
-//	double vector_matrix_mutiply = m1.vector_matrix_multiply(v1);
-//	cout << vector_matrix_mutiply << endl;
+	// multiplication
+	cout << "m3 * m5 = ";
+	(m3 * m5).print();
+	cout << endl;
 
-/* 
-	v1.x() = 5.0;
-	// matrix inverse
-	//Matrix3d m2 = m1.inverse();
-*/
+	cout << "m3 * v1 = ";
+	(m3 * v1).print();
+	cout << endl;
+
+	cout << "m3 * 2 = ";
+	(m3 * 2.0).print();
+	cout << endl;
+
+	// operator overloading
+
 	return 0;
 }
