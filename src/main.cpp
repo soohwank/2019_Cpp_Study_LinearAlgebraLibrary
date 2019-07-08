@@ -5,6 +5,9 @@ using namespace std;
 
 int main()
 {
+	Addition    addition;
+	Subtraction subtraction;
+	Multiplication multiplication;
 	//////////////////////////////////////////
 	// vector
 	/////////////////////////////////////////
@@ -41,19 +44,19 @@ int main()
 
 	Matrix3d m2(-1.0, -2.0, -3.0, -4.0, -5.0, -6.0, 7.0, 8.0, 9.0);
 	cout << m2 << endl;
-	
+
 	// addition
-	cout << (m1 + m2) << endl;
-	cout << (m1 + 1.0) << endl;
+	cout << addition(m1, m2) << endl;
+	cout << addition(m1, 1.0) << endl;
 
 	// subtraction
-	cout << (m1 - m2) << endl;
-	cout << (m1 - 1.0) << endl;
+	cout << subtraction(m1, m2) << endl;
+	cout << subtraction(m1, 1.0) << endl;
 
 	// multiplication
-	cout << (m1 * m2) << endl;
-	cout << (m1 * v1) << endl;
-	cout << (m1 * 2.0) << endl;
+	cout << multiplication(m1, m2) << endl;
+	//cout << (m1 * v1) << endl;
+	cout << multiplication(m1, 2.0) << endl;
 
 	// inverse
 	//(m1.inverse()).print();
@@ -67,7 +70,7 @@ int main()
 	{
 		for (size_t col = 0; col < 3; col++)
 		{
-			m3.set(row, col,row + col);
+			m3.set(row, col, row + col);
 		}
 	}
 
@@ -76,7 +79,7 @@ int main()
 	{
 		for (size_t col = 0; col < 3; col++)
 		{
-			m4.set(row, col,row * 2);
+			m4.set(row, col, row * 2);
 		}
 	}
 
@@ -89,15 +92,23 @@ int main()
 		}
 	}
 
-	cout << (m3 + 2.0) << endl;
-	cout << (m3 + m4) << endl;
-	cout << m3 << endl;
-	cout << (m3 - m4) << endl;
-	cout << (m3 - 3.0) << endl;
+	cout << addition(m3, 2.0) << endl;
+	cout << addition(m3, m4) << endl;
 
-	cout << (m3 * m5) << endl;
-	cout << (m3 * v1) << endl;
-	cout << (m3 * 2.0) << endl;
-	
+	cout << subtraction(m3, m4) << endl;
+	cout << subtraction(m3, 3.0) << endl;
+
+	cout << multiplication(m3, m5) << endl;
+	//cout << (m3 * v1) << endl;
+	cout << multiplication(m3, 2.0) << endl;
+
+	/*
+	=
+	==
+	!=
+	// ()
+	[]
+	*/
+
 	return 0;
 }

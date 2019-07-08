@@ -74,7 +74,7 @@ namespace lal
 		MatrixXd operator+(const double s) const
 		{
 			// speicial case
-			
+
 			MatrixXd result(m_rows, m_cols);
 			for (size_t row = 0; row < m_rows; row++)
 			{
@@ -140,19 +140,19 @@ namespace lal
 			return result;
 		}
 
-		Vector3d operator*(const Vector3d &v) const
+		/*Vector3d operator*(const Vector3d &v) const
 		{
-			Vector3d result;
-			for (int row = 0; row < 3; row++)
-			{
-				result.data[row] = 0.0;
-				for (int i = 0; i < 3; i++)
-				{
-					result.data[row] += m_ppData[row][i] * v.data[i];
-				}
-			}
-			return result;
+		Vector3d result;
+		for (int row = 0; row < 3; row++)
+		{
+		result.data[row] = 0.0;
+		for (int i = 0; i < 3; i++)
+		{
+		result.data[row] += m_ppData[row][i] * v.data[i];
 		}
+		}
+		return result;
+		}*/
 
 		MatrixXd operator*(const double s) const
 		{
@@ -231,15 +231,15 @@ namespace lal
 	public:
 		// default constructor
 		Matrix3d()
-			: MatrixXd(3,3)
+			: MatrixXd(3, 3)
 		{
 
 		}
 
 		// constructor
 		Matrix3d(const double m00, const double m01, const double m02,
-			     const double m10, const double m11, const double m12,
-			     const double m20, const double m21, const double m22)
+			const double m10, const double m11, const double m12,
+			const double m20, const double m21, const double m22)
 			: MatrixXd(3, 3)
 		{
 			m_ppData[0][0] = m00; m_ppData[0][1] = m01; m_ppData[0][2] = m02;
@@ -261,6 +261,48 @@ namespace lal
 	public:
 		// static
 		const static int dim = 3;
+	};
+
+	class Addition
+	{
+	public:
+		MatrixXd operator()(const MatrixXd& m1, const MatrixXd& m2)
+		{
+			return m1 + m2;
+		}
+
+		MatrixXd operator()(const MatrixXd& m1, const double s)
+		{
+			return m1 + s;
+		}
+	};
+
+	class Subtraction
+	{
+	public:
+		MatrixXd operator()(const MatrixXd& m1, const MatrixXd& m2)
+		{
+			return m1 - m2;
+		}
+
+		MatrixXd operator()(const MatrixXd& m1, const double s)
+		{
+			return m1 - s;
+		}
+	};
+
+	class Multiplication
+	{
+	public:
+		MatrixXd operator()(const MatrixXd& m1, const MatrixXd& m2)
+		{
+			return m1 * m2;
+		}
+
+		MatrixXd operator()(const MatrixXd& m1, const double s)
+		{
+			return m1 * s;
+		}
 	};
 
 } // namespace lal
