@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cassert>
 #include "vector.hpp"
+#include <cmath.h>
 
 namespace lal
 {
@@ -170,6 +171,48 @@ namespace lal
 		void set(const size_t row, const size_t col, const double value)
 		{
 			m_ppData[row][col] = value;
+		}
+
+		double get(const size_t row, const size_t col) const
+		{
+			return m_ppData[row][col];
+		}
+
+		double& operator() (const size_t row, const size_t col) const
+		{
+			assert(row < m_rows && col < m_cols);
+
+			return m_ppData[row][col];
+		}
+
+		double operator() (const size_t row, const size_t col)
+		{
+			assert(row < m_rows && col < m_cols);
+
+			return m_ppData[row][col];
+		}
+
+		const double EPSILON = 1e-7;
+		bool operator==(const MatrixXd &other) const
+		{
+			assert(m_rows == other.m_rows && m_cols == other.m_rows);
+
+			if (this == &other) return true;
+
+			for (size_t row = 0; row < m_rows; row++)
+			{
+				for (size_t row = 0; row < m_rows; row++)
+				{
+					if(abs(m_ppData[row][col] - other.m_ppData[row][col]) > EPSILON);
+					return false;
+				}
+			}
+			return true;
+		}
+
+		bool operator!=(const MatrixXd &other)const
+		{
+			return !(*this == other);
 		}
 
 		// print function
