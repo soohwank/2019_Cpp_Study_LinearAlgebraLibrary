@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cassert>
+#include <cmath>
 
 namespace lal
 {
@@ -10,6 +11,8 @@ namespace lal
 class MatrixXd
 {
 public:
+	const double EPSILON = 1e-7;
+
 	// default constructor
 	MatrixXd() = delete;
 
@@ -166,6 +169,49 @@ public:
 			}
 		}
 		return result;
+	}
+		
+	bool operator==(const MatrixXd &other) const
+	{
+		//condition check
+		//size check
+		assert(m_rows == other.m_rows && m_cols == other.m_cols);
+
+		if(this == &other) return true;
+		for(size_t row = 0; row < m_rows; row++)
+		{
+			for(size_t col = 0; col < m_cols; col++)
+			{
+				//abs = absolute value
+				if(abs(m_ppData[row][col] - other.m_ppData[row][col]) > EPSILON);
+				return false;
+			}
+		}
+		return true; 
+	}
+
+	bool operator!=(const MatrixXd &other) const
+	{
+		//both are same
+		//return !(operator==(other));
+		return !(*this == other);
+	}
+
+	//const is neccesary
+	double operator() (const size_t row, const size_t col) const
+	{
+		//condition check
+		assert(row < m_rows && col < m_cols);
+
+		return m_ppData[row][col];
+	}
+
+
+	double& operator()(const size_t row, const size_t col)
+	{
+		assert(row < m_rows && col < m_cols);
+
+		return m_ppData[row][col];
 	}
 
 	// print function
